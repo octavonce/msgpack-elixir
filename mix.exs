@@ -4,14 +4,14 @@ defmodule MessagePack.Mixfile do
   def project do
     [ app: :message_pack,
       version: "0.2.0",
-      elixir: "~> 1.0.0 or ~> 0.15.1",
-      deps: deps,
+      elixir: ">= 1.6.0",
+      deps: deps(),
       build_per_environment: false,
 
       name: "MessagePack",
       source_url: "https://github.com/mururu/msgpack-elixir",
       description: "MessagePack Implementation for Elixir",
-      package: package ]
+      package: package() ]
   end
 
   def application do
