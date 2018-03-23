@@ -45,6 +45,7 @@ defmodule MessagePack.Packer do
   defp do_pack(i, _) when is_integer(i) and i < 0, do: pack_int(i)
   defp do_pack(i, _) when is_integer(i), do: pack_uint(i)
   defp do_pack(f, _) when is_float(f), do: << 0xCB :: size(8), f :: size(64)-big-float-unit(1)>>
+  defp do_pack(t, opts) when is_tuple(t), do: pack_tuple(t, opts)
   defp do_pack(binary, %{enable_string: true}) when is_binary(binary) do
     if String.valid?(binary) do
       pack_string(binary)
@@ -138,6 +139,10 @@ defmodule MessagePack.Packer do
       error ->
         error
     end
+  end
+
+  defp pack_tuple(tuple, opts) do
+    pack_array(:erlang.tuple_to_list(tuple), opts)
   end
 
   defp pack_array(list, options) do
